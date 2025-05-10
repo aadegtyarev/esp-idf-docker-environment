@@ -1,0 +1,28 @@
+services:
+  esp32-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    #   args:
+    #     - HTTP_PROXY=http://192.168.2.102:20172
+    #     - HTTPS_PROXY=http://192.168.2.102:20172
+    # environment:
+    #   - HTTP_PROXY=http://192.168.2.102:20172
+    #   - HTTPS_PROXY=http://192.168.2.102:20172
+    #   - NO_PROXY=localhost,127.0.0.1
+    container_name: esp32-dev
+    privileged: true
+    tty: true
+    stdin_open: true
+    working_dir: /project
+    volumes:
+      - ./project:/project:cached
+      - idf_tools_cache:/root/.espressif
+      - /dev:/dev
+      - esp_ccache:/root/.ccache
+    ports:
+      - "2222:22"     # пробрасываем SSH      
+volumes:
+  idf_tools_cache:
+  esp_ccache:
+networks: {}
